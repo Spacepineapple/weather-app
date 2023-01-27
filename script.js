@@ -56,12 +56,21 @@ function getFiveDayForecast(response) {
         let humidity = response.list[i].main.humidity;
         let icon = response.list[i].weather[0].icon;
         let date = response.list[i].dt_txt;
-        forecast.innerHTML = `
-            <h3>${cityName} ${date}</h3><img src="http://openweathermap.org/img/wn/${icon}@2x.png">
-            <p>Temp: ${temperature}</p>
-            <p>Wind: ${wind}</p>
-            <p>Humidity: ${humidity}</p>
-        `;
+        let card = document.createElement("div");
+        card.classList.add("col-sm-2");
+        card.innerHTML = `
+        <div class="card text-white bg-dark">
+        <div class="card-body">
+          <h5 class="card-title">${date}</h5>
+          <img src="http://openweathermap.org/img/wn/${icon}@2x.png">
+          <p class="card-text">Temp: ${temperature}<br>
+            Wind: ${wind}<br>
+            Humidity: ${humidity}<br>
+          </p>
+        </div>
+        </div>
+        `
+        forecast.appendChild(card);
         console.log(i);
     }
 }
