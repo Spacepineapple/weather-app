@@ -1,17 +1,26 @@
-let lat = "51.52588653564453";
-let lon = "-0.3017457127571106";
+let lat;
+let lon;
 let apiKey = localStorage.getItem("apiKey");
 let cityName = "London";
-
+let limit = 5;
 let city = document.querySelector("#search-input").value;
 
 
-//let queryURL = `https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid={apiKey}`
-let queryURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+
+let cityQueryURL = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=${limit}&appid=${apiKey}`
 
 
-fetch(queryURL)
+fetch(cityQueryURL)
     .then(response => response.json())
     .then(function(response) {
         console.log(response);
+        lat = response[0].lat;
+        lon = response[0].lon;
+        let forecastQueryURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+        fetch(forecastQueryURL)
+            .then(response => response.json())
+            .then(function(response) {
+                console.log(response);
+            })
     })
+
